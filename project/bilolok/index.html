@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+<meta name="description" property="og:description" content="A Foursqaure inspired app for kava bars in Port Vila, Vanuatu.
+">
+<meta name="viewport" content="width=device-width">
+<title>Bilolok</title>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+
+<script>
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+	<link rel="stylesheet" href="/assets/d3a187b4.cce37e92.css" />
+<link rel="stylesheet" href="/assets/3592ccdf.d5d1bbea.css" />
+<link rel="stylesheet" href="/assets/3360f7d5.b820cadb.css" /></head>
+	<body class="bg-blue-50">
+		<nav class="flex items-center py-4 px-8" data-v-20129e31><a class="block" href="/" data-v-20129e31><div class="flex items-center justify-center pb-0.5 w-10 h-6 mr-2 transition-all ease-in-out duration-150 text-slate-900 font-black leading-tight border-2 border-slate-900 hover:border-orange-500 border-solid rounded-xl hover:text-orange-500 focus:text-orange-500" data-v-20129e31>MT</div></a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/posts" data-v-20129e31> Posts </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/projects" data-v-20129e31> Portfolio </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/about" data-v-20129e31> About </a><a class="block ml-auto" href="https://github.com/michaeltoohig" data-v-20129e31><svg class="block w-6 h-6 fill-slate-900 transition-colors duration-150 hover:fill-orange-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-v-20129e31><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-v-20129e31></path></svg></a></nav>
+		<header style="background-image:url(/assets/project/bilolok.png)" class="
+			p-6
+			text-white
+			bg-black
+			flex
+			items-center
+			justify-center
+			w-100
+			h-100
+			min-h-[70vh]
+			bg-cover
+			bg-no-repeat
+			bg-center
+		">
+			<h1 class="
+				text-6xl
+				md:text-7xl
+				font-black
+				uppercase
+				tracking-wider
+				text-shadow
+			">Bilolok</h1>
+		</header>
+		<div class="text-white bg-black">
+			<div class="py-12 mb-12 text-center">
+				<span class="m-4 uppercase text-orange-300">Vue</span><span class="m-4 uppercase text-orange-300">Python</span><span class="m-4 uppercase text-orange-300">FastAPI</span><span class="m-4 uppercase text-orange-300">Leaflet</span>
+				<h3 class="mt-2 text-2xl font-normal">A Foursqaure inspired app for kava bars in Port Vila, Vanuatu.
+</h3>
+			</div>
+		</div>
+		<div class="mx-auto px-4 max-w-5xl">
+  <article class="
+  mx-auto
+  prose
+  md:prose-lg
+  lg:prose-xl
+  prose-img:rounded
+  prose-img:drop-shadow-lg
+">
+  <p>In my wife’s local language from south-east Malekula <code>bilolok</code> means kava; which gives the tagline of the project <em>“it means kava”</em> a fun double meaning.</p><p>I wanted an app that focused on a map view of the kava bars since I wanted the app to be a tool to help people explore and know what is around them in the real world.</p><img src="/assets/desktop-map-dark.bbfb3811.png"><p>But as development continued I ended up adding more social features until it became a semi-Foursquare inspired app.</p><p>Of course users check-in to kava bars they visit. So they can become the “chief” of the kava bar if they have the most check-ins in the last 30 days.</p><img src="/assets/timeline-checkin-light.86d2b393.png"><img src="/assets/timeline-image-light.006a44c7.png"><p>Since the map was so important to the app in my early iteration I decided to play around with the web browsers location API so I could point users towards the kava bar they selected and record the path they took to get there.</p><img src="/assets/timeline-trip-light.3181e187.png"><p>Most recently, I decided to see how easy it would be to use the web browsers camera API so I ended up with user uploaded videos on the app.</p><img src="/assets/timeline-video-light.41178111.png"><h2 id="frontend">Frontend</h2><p>A Vue.js application using <a href="https://vuetifyjs.com">Vuetify</a> and heavily leaning on <a href="https://leafletjs.com">Leaflet</a> for the map interface. It also uses <a href="https://developers.google.com/web/tools/workbox">Workbox</a> for the service worker to add <abbr title="Progress Web Application">PWA</abbr> features to give native-like capabilities to the web app.</p><blockquote>
+<p>We are using Vue2 at this point since Vue3 was only introduced soon before starting this project and packages I wanted to use were not ready for the migration either. But, when Vuetify, Vue-Leaflet, and a few others are stable on Vue3 this project should upgrade for the improvements to bundle size and speed. Plus the upgrade to <a href="https://vitejs.dev">Vite</a> will be welcomed.</p>
+</blockquote><img src="/assets/mobile-kava-bar-profile-light.79e2bb9b.png" class="mx-auto object-cover w-64"><h3 id="map">Map</h3><p>Leaflet is a great mobile-friendly interative map library for most use-cases such as ours.</p><img src="/assets/desktop-map-light.b9013a79.png"><p>The only downside of leaflet for our use-case is the use raster tiles and no native support of vector tiles.
+Raster tiles do require more bandwidth but require less processing power to render. Since many users have mid level or low level devices and since I would be caching I figured that was a trade-off I could handle.</p><h4 id="map-alternatives">Map Alternatives</h4><p>OpenLayers and MapBox are two alternatives to Leaflet that support vector tiles. I did build a simplified version with each but the extra complexity for me to learn a new framework when I just wanted to get something deployed meant I stayed with Leaflet. I would try OpenLayers again once I feel the value of more customization and vector tiles is worth the effort.</p><h3 id="pwa-features">PWA Features</h3><p>Progressive Web App features allow for the Vue.js frontend to use several browser/device APIs that make the web application behave more like a native mobile application.</p><ul>
+<li>Available for download on Google Play Store</li>
+<li>Add to Home screen from browser</li>
+<li>Geolocation</li>
+<li>Push Notifications</li>
+<li>Sharing</li>
+<li>Offline accessible and delayed <code>POST</code> requests until network returns</li>
+</ul><p>Originally, I wanted to explore using PWA features for the offline capabilities since network coverage in Vanuatu is poor and data usage is expensive. But over time I just kept adding more PWA features to familarize myself with them and see what could be built.</p><h3 id="data-store">Data Store</h3><p>…</p><h2 id="backend-api">Backend API</h2><p>The API is built with <a href="https://fastapi.tiangolo.com">FastAPI</a> and in the hopes to simplify development I decided to try out a few FastAPI specific packages:</p><ul>
+<li>FastAPI-Users</li>
+<li>FastAPI-CRUDRouter</li>
+<li>FastAPI-Mail</li>
+</ul><p>The database is Postgres and I interact with it via the latest 2.0 version of <a href="https://docs.sqlalchemy.org/en/14/changelog/migration_20.html">SQLAlchemy</a> which supports async just like FastAPI. Does it really need to be async, probably not but I’ll just go with the trend and be familiar with it.</p><h2 id="resumable-uploads">Resumable Uploads</h2><p><a href="https://tus.io">Tus</a> is an open protocol for resumable file uploads. I wanted to implement the tus protocol to be resilient against network unreliability which is a persistent issue here.</p><p>On the frontend I use <a href="https://uppy.io">Uppy</a> to handle the tus protocol and provide a great drag and drop target for files and the option for more plugins that allow uploading images from the user’s Instagram or other social networks.</p><img src="/assets/desktop-kava-bar-profile-images-light.995c30f9.png"><h2 id="image-cdn">Image CDN</h2><p><a href="http://www.thumbor.org">Thumbor</a> is an open source project for on demand image resizing, cropping and filters. I like that once its up and running I only have to manage the original image uploads and let it handle the rest. I just have to specify the size of image I want when calling for the image.</p><blockquote>
+<p>But to prevent misuse it is best to add HMAC. This way only the sizes you specify will be generated and only the images you specify will populate the image cache.</p>
+</blockquote><p>In the docker deployment we run a Nginx proxy infront of the thumbor instance so thumbor will not save any files but lets Nginx cache the images.</p>
+</article>
+</div>
+		<footer class="text-center mt-8">
+			<a href="/projects">
+				<span class="inline border-2 border-solid border-black py-2 px-4 font-bold uppercase hover:border-orange-500 hover:text-orange-500 hover:cursor-pointer"><!--[-->Return<!--]--></span>
+			</a>
+		</footer>
+		<div class="mt-12">
+				<div class="mx-auto px-4 max-w-5xl">
+  <h2 class="font-bold text-3xl my-8">Related Posts</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+						<div class="relative text-white border-1 border-solid border-black bg-black flex flex-col"><div class="relative pt-[37%] bg-cover bg-center" style="background-image:url(&#39;/assets/post/og-tags-facebook.jpg&#39;)"><h1 class="absolute top-0 h-full w-full flex items-center justify-center text-white text-3xl font-bold uppercase tracking-wider text-shadow">OG Tags and Facebook Issues</h1></div><div class="p-6"><p class="mt-0 mb-4 text-lg leading-normal font-medium">Painful workarounds to accommodate Facebook&#39;s web crawler
+</p><div class="text-xs font-medium uppercase"> Tagged: <!--[--><div class="inline ml-2 uppercase text-orange-300" data-key="Python">Python</div><div class="inline ml-2 uppercase text-orange-300" data-key="Starlette">Starlette</div><!--]--></div><a href="/post/open-graph-facebook" class="group absolute top-0 left-0 w-full h-full flex items-center justify-center color-green-600 text-2xl font-bold bg-[rgba(0,0,0,0.25)] opacity-0 uppercase transition-opacity duration-150 hover:opacity-100"><span class="py-1 px-6 text-white border-2 border-solid border-slate-100 transition-all duration-300 translate-y-1/4 group-hover:translate-y-0 group-focus:translate-y-0 group-hover:border-white group-focus:border-white"> View </span></a></div></div><div class="relative text-white border-1 border-solid border-black bg-black flex flex-col"><div class="relative pt-[37%] bg-cover bg-center" style="background-image:url(&#39;/assets/post/thumbor.jpg&#39;)"><h1 class="absolute top-0 h-full w-full flex items-center justify-center text-white text-3xl font-bold uppercase tracking-wider text-shadow">Thumbor</h1></div><div class="p-6"><p class="mt-0 mb-4 text-lg leading-normal font-medium">Integrating Thumbor image thumbnail service into Bilolok. 
+</p><div class="text-xs font-medium uppercase"> Tagged: <!--[--><div class="inline ml-2 uppercase text-orange-300" data-key="Python">Python</div><div class="inline ml-2 uppercase text-orange-300" data-key="Docker">Docker</div><!--]--></div><a href="/post/thumbor" class="group absolute top-0 left-0 w-full h-full flex items-center justify-center color-green-600 text-2xl font-bold bg-[rgba(0,0,0,0.25)] opacity-0 uppercase transition-opacity duration-150 hover:opacity-100"><span class="py-1 px-6 text-white border-2 border-solid border-slate-100 transition-all duration-300 translate-y-1/4 group-hover:translate-y-0 group-focus:translate-y-0 group-hover:border-white group-focus:border-white"> View </span></a></div></div><div class="relative text-white border-1 border-solid border-black bg-black flex flex-col"><div class="relative pt-[37%] bg-cover bg-center" style="background-image:url(&#39;/assets/post/tus-and-uppy.jpg&#39;)"><h1 class="absolute top-0 h-full w-full flex items-center justify-center text-white text-3xl font-bold uppercase tracking-wider text-shadow">Tus and Uppy</h1></div><div class="p-6"><p class="mt-0 mb-4 text-lg leading-normal font-medium">Integrating resumable uploads into Bilolok. 
+</p><div class="text-xs font-medium uppercase"> Tagged: <!--[--><div class="inline ml-2 uppercase text-orange-300" data-key="FastAPI">FastAPI</div><div class="inline ml-2 uppercase text-orange-300" data-key="Vue">Vue</div><div class="inline ml-2 uppercase text-orange-300" data-key="Docker">Docker</div><!--]--></div><a href="/post/tus-and-uppy" class="group absolute top-0 left-0 w-full h-full flex items-center justify-center color-green-600 text-2xl font-bold bg-[rgba(0,0,0,0.25)] opacity-0 uppercase transition-opacity duration-150 hover:opacity-100"><span class="py-1 px-6 text-white border-2 border-solid border-slate-100 transition-all duration-300 translate-y-1/4 group-hover:translate-y-0 group-focus:translate-y-0 group-hover:border-white group-focus:border-white"> View </span></a></div></div>
+					</div>
+</div>
+			</div>
+		<footer class="text-center pt-12 px-4 pb-6"> © 2022 Michael Toohig <small class="block mt-4 color-slate-400 text-sm text-uppercase">Built in Vanuatu</small></footer>
+	</body></html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+<meta name="description" property="og:description" content="Integrating Thumbor image thumbnail service into Bilolok. 
+">
+<meta name="viewport" content="width=device-width">
+<title>Thumbor</title>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+
+<script>
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+	<link rel="stylesheet" href="/assets/d3a187b4.cce37e92.css" />
+<link rel="stylesheet" href="/assets/3592ccdf.d5d1bbea.css" />
+<link rel="stylesheet" href="/assets/3360f7d5.b820cadb.css" /></head>
+	<body class="bg-blue-50">
+		<nav class="flex items-center py-4 px-8" data-v-20129e31><a class="block" href="/" data-v-20129e31><div class="flex items-center justify-center pb-0.5 w-10 h-6 mr-2 transition-all ease-in-out duration-150 text-slate-900 font-black leading-tight border-2 border-slate-900 hover:border-orange-500 border-solid rounded-xl hover:text-orange-500 focus:text-orange-500" data-v-20129e31>MT</div></a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/posts" data-v-20129e31> Posts </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/projects" data-v-20129e31> Portfolio </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/about" data-v-20129e31> About </a><a class="block ml-auto" href="https://github.com/michaeltoohig" data-v-20129e31><svg class="block w-6 h-6 fill-slate-900 transition-colors duration-150 hover:fill-orange-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-v-20129e31><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-v-20129e31></path></svg></a></nav>
+		<header style="background-image:url(/assets/post/thumbor.jpg)" class="
+			p-6
+			text-white
+			bg-black
+			flex
+			items-center
+			justify-center
+			w-100
+			h-100
+			min-h-[70vh]
+			bg-cover
+			bg-no-repeat
+			bg-center
+		">
+			<h1 class="
+				text-6xl
+				font-black
+				uppercase
+				tracking-wider
+				text-shadow
+			">Thumbor</h1>
+		</header>
+		<div class="text-white bg-black">
+			<div class="py-12 mb-12 text-center">
+				<span class="m-4 uppercase text-orange-300">Python</span><span class="m-4 uppercase text-orange-300">Docker</span>
+				<h3 class="mt-2 text-2xl font-normal">Integrating Thumbor image thumbnail service into Bilolok. 
+</h3>
+			</div>
+		</div>
+		<div class="mx-auto px-4 max-w-5xl">
+  <article class="
+  mx-auto
+  prose
+  md:prose-lg
+  lg:prose-xl
+  prose-img:rounded
+  prose-img:drop-shadow-lg
+">
+  <p><a href="http://www.thumbor.org/">Thumbor</a> is an on-demand image resizing, cropping and filter service. In our <code>docker-compose.yml</code> config I included two services <code>nginx</code> as a cache infront of <code>thumbor</code>.</p><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #268BD2">services</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">thumbor</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">image</span><span style="color: #839496">: </span><span style="color: #2AA198">minimalcompact/thumbor</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">volumes</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">&quot;${DATA_LOCAL_DIR}/:/data/uploads/&quot;</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">env_file</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">.env</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">environment</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">VIRTUAL_HOST=image.bilolok.com</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">THUMBOR_NUM_PROCESSES=1</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">AUTO_WEBP=True</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">ALLOW_UNSAFE_URL=False</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">SECURITY_KEY=${THUMBOR_SECURITY_KEY}</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">LOADER=thumbor.loaders.file_loader</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">FILE_LOADER_ROOT_PATH=/data/uploads/</span></span>
+<span class="line"><span style="color: #839496">      </span><span style="color: #586E75; font-style: italic"># nginx-proxy does caching automatically, so no need to store the result storage cache</span></span>
+<span class="line"><span style="color: #839496">      </span><span style="color: #586E75; font-style: italic"># (this greatly speeds up and saves on CPU)</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">RESULT_STORAGE=thumbor.result_storages.no_storage</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">RESULT_STORAGE_STORES_UNSAFE=True</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">STORAGE=thumbor.storages.file_storage</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">restart</span><span style="color: #839496">: </span><span style="color: #2AA198">always</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">nginx-proxy</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">image</span><span style="color: #839496">: </span><span style="color: #2AA198">minimalcompact/thumbor-nginx-proxy-cache</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">environment</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">DEFAULT_HOST=image.bilolok.com</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">PROXY_CACHE_SIZE=10g</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">PROXY_CACHE_MEMORY_SIZE=500m</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">PROXY_CACHE_INACTIVE=168h</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">volumes</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">      </span><span style="color: #586E75; font-style: italic"># this is essential for nginx-proxy to detect docker containers, scaling etc</span></span>
+<span class="line"><span style="color: #839496">      </span><span style="color: #586E75; font-style: italic"># see https://github.com/jwilder/nginx-proxy</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">/var/run/docker.sock:/tmp/docker.sock:ro</span></span>
+<span class="line"><span style="color: #839496">      </span><span style="color: #586E75; font-style: italic"># mapping cache folder, to persist it independently of the container</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">bilolok-img-cache-data-prod:/var/cache/nginx</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">ports</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">      - </span><span style="color: #2AA198">&quot;8888:80&quot;</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">restart</span><span style="color: #839496">: </span><span style="color: #2AA198">always</span></span>
+<span class="line"><span style="color: #839496">  </span></span>
+<span class="line"><span style="color: #268BD2">volumes</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">bilolok-img-cache-data-prod</span><span style="color: #839496">:</span></span></code></pre><p>In the API codebase I keep a helper file which has configured <code>libthumbor</code> ready to use Thumbor’s secret key. We use this becuse otherwise a malicious user could spam our backend for millions of variations of the same image.</p><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #859900">from</span><span style="color: #839496"> libthumbor </span><span style="color: #859900">import</span><span style="color: #839496"> CryptoURL</span></span>
+<span class="line"><span style="color: #859900">from</span><span style="color: #839496"> app.core.config </span><span style="color: #859900">import</span><span style="color: #839496"> settings</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #839496">img_crypto_url </span><span style="color: #859900">=</span><span style="color: #839496"> CryptoURL(key</span><span style="color: #859900">=</span><span style="color: #839496">settings.</span><span style="color: #CB4B16">THUMBOR_SECURITY_KEY</span><span style="color: #839496">)</span></span></code></pre><p>And lastly, I use the <code>img_crypto_url</code> instance to generate safe URLs that Thumbor will accept on the client side.</p><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #93A1A1; font-weight: bold">def</span><span style="color: #839496"> </span><span style="color: #268BD2">make_src_url</span><span style="color: #839496">(self, image: Image, width: </span><span style="color: #859900">int</span><span style="color: #839496">, height: </span><span style="color: #859900">int</span><span style="color: #839496">, </span><span style="color: #859900">**</span><span style="color: #839496">kwargs) -&gt; </span><span style="color: #859900">str</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">    uri </span><span style="color: #859900">=</span><span style="color: #839496"> img_crypto_url.generate(</span></span>
+<span class="line"><span style="color: #839496">        width</span><span style="color: #859900">=</span><span style="color: #839496">width,</span></span>
+<span class="line"><span style="color: #839496">        height</span><span style="color: #859900">=</span><span style="color: #839496">height,</span></span>
+<span class="line"><span style="color: #839496">        smart</span><span style="color: #859900">=</span><span style="color: #B58900">True</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">        image_url</span><span style="color: #859900">=str</span><span style="color: #839496">(</span></span>
+<span class="line"><span style="color: #839496">            Image.build_filepath(image.nakamal.id, image.file_id, image.filename)</span></span>
+<span class="line"><span style="color: #839496">        ),</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">**</span><span style="color: #839496">kwargs,</span></span>
+<span class="line"><span style="color: #839496">    )</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">return</span><span style="color: #839496"> </span><span style="color: #2AA198">&quot;</span><span style="color: #CB4B16">{}{}</span><span style="color: #2AA198">&quot;</span><span style="color: #839496">.format(settings.</span><span style="color: #CB4B16">THUMBOR_SERVER</span><span style="color: #839496">, uri)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #93A1A1; font-weight: bold">def</span><span style="color: #839496"> </span><span style="color: #268BD2">make_src_urls</span><span style="color: #839496">(self, image: ImageSchema) -&gt; ImageSchema:</span></span>
+<span class="line"><span style="color: #839496">    image.src </span><span style="color: #859900">=</span><span style="color: #839496"> </span><span style="color: #268BD2">self</span><span style="color: #839496">.make_src_url(</span></span>
+<span class="line"><span style="color: #839496">        image,</span></span>
+<span class="line"><span style="color: #839496">        height</span><span style="color: #859900">=</span><span style="color: #D33682">720</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">        width</span><span style="color: #859900">=</span><span style="color: #D33682">1280</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">        full_fit_in</span><span style="color: #859900">=</span><span style="color: #B58900">True</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">        filters</span><span style="color: #859900">=</span><span style="color: #839496">[</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #2AA198">&quot;watermark(/images/watermark.png,20,-20,20,30)&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">        ],</span></span>
+<span class="line"><span style="color: #839496">    )</span></span>
+<span class="line"><span style="color: #839496">    image.msrc </span><span style="color: #859900">=</span><span style="color: #839496"> </span><span style="color: #268BD2">self</span><span style="color: #839496">.make_src_url(image, height</span><span style="color: #859900">=</span><span style="color: #D33682">32</span><span style="color: #839496">, width</span><span style="color: #859900">=</span><span style="color: #D33682">32</span><span style="color: #839496">, full_fit_in</span><span style="color: #859900">=</span><span style="color: #B58900">True</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">    image.thumbnail </span><span style="color: #859900">=</span><span style="color: #839496"> </span><span style="color: #268BD2">self</span><span style="color: #839496">.make_src_url(image, height</span><span style="color: #859900">=</span><span style="color: #D33682">200</span><span style="color: #839496">, width</span><span style="color: #859900">=</span><span style="color: #D33682">200</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">return</span><span style="color: #839496"> image</span></span></code></pre><p>So when the user requests an image object from the API they are returned a response like the one below.</p><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #839496">{</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;id&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;7bebc655-ee33-4f44-bea9-3244c57d1d22&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;created_at&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;2021-12-02T06:28:02.669341+00:00&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;file_id&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;0ee90ed94acc56f000579f2d13f3866f&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;filename&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;SmartSelect_20211202-172704_Facebook.jpg&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;src&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;https://image.bilolok.com/ls3NgsypowbLm8YQvK79UOINcNk=/full-fit-in/1280x720/smart/nakamals/f9/f9b1994d-bfc7-4d2b-8225-47e9b5b9dd16/0ee90ed94acc56f000579f2d13f3866f.jpg&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;msrc&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;https://image.bilolok.com/e7wazqFPJMko1obtAFoCNoDN0rw=/full-fit-in/32x32/smart/nakamals/f9/f9b1994d-bfc7-4d2b-8225-47e9b5b9dd16/0ee90ed94acc56f000579f2d13f3866f.jpg&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;thumbnail&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;https://image.bilolok.com/RDkUYpi5ZM8hxwH_6iCWn8yCD8M=/200x200/smart/nakamals/f9/f9b1994d-bfc7-4d2b-8225-47e9b5b9dd16/0ee90ed94acc56f000579f2d13f3866f.jpg&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #859900">&quot;user&quot;</span><span style="color: #839496">: {</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">&quot;id&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;d509f517-3042-4595-89bc-4f93be36acf7&quot;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">&quot;avatar&quot;</span><span style="color: #839496">: </span><span style="color: #2AA198">&quot;https://image.bilolok.com/F5cOi-sYJg5KAdL81_3mmmeRCgY=/100x100/smart/users/d5/d509f517-3042-4595-89bc-4f93be36acf7/default.png&quot;</span></span>
+<span class="line"><span style="color: #839496">  }</span></span>
+<span class="line"><span style="color: #839496">}</span></span></code></pre>
+</article>
+</div>
+		<footer class="text-center mt-8">
+			<a href="/posts">
+				<span class="inline border-2 border-solid border-black py-2 px-4 font-bold uppercase hover:border-orange-500 hover:text-orange-500 hover:cursor-pointer"><!--[-->View More<!--]--></span>
+			</a>
+		</footer>
+		<div class="mt-12">
+				<div class="mx-auto px-4 max-w-5xl">
+  <h2 class="font-bold text-3xl my-8">Related Project</h2><div class="relative text-white border-1 border-solid border-black bg-black flex flex-col"><div class="relative pt-[37%] bg-cover bg-center" style="background-image:url(&#39;/assets/project/bilolok.png&#39;)"><h1 class="absolute top-0 h-full w-full flex items-center justify-center text-white text-3xl font-bold uppercase tracking-wider text-shadow">Bilolok</h1></div><div class="p-6"><p class="mt-0 mb-4 text-lg leading-normal font-medium">A Foursqaure inspired app for kava bars in Port Vila, Vanuatu.
+</p><div class="text-xs font-medium uppercase"> Tagged: <!--[--><div class="inline ml-2 uppercase text-orange-300" data-key="Vue">Vue</div><div class="inline ml-2 uppercase text-orange-300" data-key="Python">Python</div><div class="inline ml-2 uppercase text-orange-300" data-key="FastAPI">FastAPI</div><div class="inline ml-2 uppercase text-orange-300" data-key="Leaflet">Leaflet</div><!--]--></div><a href="/project/bilolok" class="group absolute top-0 left-0 w-full h-full flex items-center justify-center color-green-600 text-2xl font-bold bg-[rgba(0,0,0,0.35)] opacity-0 uppercase transition-opacity duration-150 hover:opacity-100"><span class="py-1 px-6 text-orange-50 border-2 border-solid border-orange-50 transition-all duration-300 translate-y-1/4 group-hover:translate-y-0 group-focus:translate-y-0 group-hover:border-orange-50 group-focus:border-orange-50"> View </span></a></div></div>
+</div>
+			</div>
+		<footer class="text-center pt-12 px-4 pb-6"> © 2022 Michael Toohig <small class="block mt-4 color-slate-400 text-sm text-uppercase">Built in Vanuatu</small></footer>
+	</body></html>

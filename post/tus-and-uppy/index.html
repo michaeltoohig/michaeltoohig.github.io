@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+<meta name="description" property="og:description" content="Integrating resumable uploads into Bilolok. 
+">
+<meta name="viewport" content="width=device-width">
+<title>Tus and Uppy</title>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+
+<script>
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+	<link rel="stylesheet" href="/assets/d3a187b4.cce37e92.css" />
+<link rel="stylesheet" href="/assets/3592ccdf.d5d1bbea.css" />
+<link rel="stylesheet" href="/assets/3360f7d5.b820cadb.css" /></head>
+	<body class="bg-blue-50">
+		<nav class="flex items-center py-4 px-8" data-v-20129e31><a class="block" href="/" data-v-20129e31><div class="flex items-center justify-center pb-0.5 w-10 h-6 mr-2 transition-all ease-in-out duration-150 text-slate-900 font-black leading-tight border-2 border-slate-900 hover:border-orange-500 border-solid rounded-xl hover:text-orange-500 focus:text-orange-500" data-v-20129e31>MT</div></a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/posts" data-v-20129e31> Posts </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/projects" data-v-20129e31> Portfolio </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/about" data-v-20129e31> About </a><a class="block ml-auto" href="https://github.com/michaeltoohig" data-v-20129e31><svg class="block w-6 h-6 fill-slate-900 transition-colors duration-150 hover:fill-orange-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-v-20129e31><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-v-20129e31></path></svg></a></nav>
+		<header style="background-image:url(/assets/post/tus-and-uppy.jpg)" class="
+			p-6
+			text-white
+			bg-black
+			flex
+			items-center
+			justify-center
+			w-100
+			h-100
+			min-h-[70vh]
+			bg-cover
+			bg-no-repeat
+			bg-center
+		">
+			<h1 class="
+				text-6xl
+				font-black
+				uppercase
+				tracking-wider
+				text-shadow
+			">Tus and Uppy</h1>
+		</header>
+		<div class="text-white bg-black">
+			<div class="py-12 mb-12 text-center">
+				<span class="m-4 uppercase text-orange-300">FastAPI</span><span class="m-4 uppercase text-orange-300">Vue</span><span class="m-4 uppercase text-orange-300">Docker</span>
+				<h3 class="mt-2 text-2xl font-normal">Integrating resumable uploads into Bilolok. 
+</h3>
+			</div>
+		</div>
+		<div class="mx-auto px-4 max-w-5xl">
+  <article class="
+  mx-auto
+  prose
+  md:prose-lg
+  lg:prose-xl
+  prose-img:rounded
+  prose-img:drop-shadow-lg
+">
+  <p><a href="https://tus.io">Tus</a> is an open protocol for resumable file uploads which pairs well with <a href="https://uppy.io">Uppy</a> on the frontend. On the backend I used the <code>tusd</code> server in the <code>docker-compose.yml</code> config and a custom hook in the FastAPI code to handle the uploaded files.</p><h2 id="frontend">Frontend</h2><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #586E75">&lt;</span><span style="color: #268BD2">template</span><span style="color: #586E75">&gt;</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #586E75">&lt;</span><span style="color: #268BD2">div</span><span style="color: #586E75">&gt;</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #586E75">&lt;</span><span style="color: #859900">DashboardModal</span></span>
+<span class="line"><span style="color: #839496">      :</span><span style="color: #93A1A1">uppy</span><span style="color: #839496">=</span><span style="color: #839496">&quot;</span><span style="color: #268BD2">uppy</span><span style="color: #839496">&quot;</span></span>
+<span class="line"><span style="color: #839496">      :</span><span style="color: #93A1A1">open</span><span style="color: #839496">=</span><span style="color: #839496">&quot;</span><span style="color: #268BD2">open</span><span style="color: #839496">&quot;</span></span>
+<span class="line"><span style="color: #839496">      :</span><span style="color: #93A1A1">plugins</span><span style="color: #839496">=</span><span style="color: #839496">&quot;</span><span style="color: #839496">[]</span><span style="color: #839496">&quot;</span></span>
+<span class="line"><span style="color: #839496">      :</span><span style="color: #93A1A1">props</span><span style="color: #839496">=</span><span style="color: #839496">&quot;</span><span style="color: #839496">{theme: </span><span style="color: #2AA198">&#39;light&#39;</span><span style="color: #839496">}</span><span style="color: #839496">&quot;</span></span>
+<span class="line"><span style="color: #839496">    /</span><span style="color: #586E75">&gt;</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #586E75">&lt;/</span><span style="color: #268BD2">div</span><span style="color: #586E75">&gt;</span></span>
+<span class="line"><span style="color: #586E75">&lt;/</span><span style="color: #268BD2">template</span><span style="color: #586E75">&gt;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #586E75">&lt;</span><span style="color: #268BD2">script</span><span style="color: #586E75">&gt;</span></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> { </span><span style="color: #268BD2">mapGetters</span><span style="color: #839496"> } </span><span style="color: #859900">from</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;vuex&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> { </span><span style="color: #268BD2">DashboardModal</span><span style="color: #839496"> } </span><span style="color: #859900">from</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;@uppy/vue&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> { </span><span style="color: #268BD2">uploadDomain</span><span style="color: #839496"> } </span><span style="color: #859900">from</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;@/env&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;@uppy/core/dist/style.css&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;@uppy/dashboard/dist/style.css&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> { </span><span style="color: #268BD2">Uppy</span><span style="color: #839496"> } </span><span style="color: #859900">from</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;@uppy/core&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"><span style="color: #859900">import</span><span style="color: #839496"> </span><span style="color: #268BD2">Tus</span><span style="color: #839496"> </span><span style="color: #859900">from</span><span style="color: #839496"> </span><span style="color: #2AA198">&#39;@uppy/tus&#39;</span><span style="color: #839496">;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #859900">export</span><span style="color: #839496"> </span><span style="color: #859900">default</span><span style="color: #839496"> {</span></span>
+<span class="line"><span style="color: #839496">  name: </span><span style="color: #2AA198">&#39;NakamalImageUpload&#39;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  props: [</span><span style="color: #2AA198">&#39;nakamal&#39;</span><span style="color: #839496">, </span><span style="color: #2AA198">&#39;open&#39;</span><span style="color: #839496">],</span></span>
+<span class="line"><span style="color: #839496">  components: {</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">DashboardModal</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">  },</span></span>
+<span class="line"><span style="color: #839496">  computed: {</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">...</span><span style="color: #268BD2">mapGetters</span><span style="color: #839496">({</span></span>
+<span class="line"><span style="color: #839496">      user: </span><span style="color: #2AA198">&#39;auth/user&#39;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">      token: </span><span style="color: #2AA198">&#39;auth/token&#39;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">    }),</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">uppy</span><span style="color: #839496">() {</span></span>
+<span class="line"><span style="color: #839496">      </span><span style="color: #859900">return</span><span style="color: #839496"> </span><span style="color: #859900">new</span><span style="color: #839496"> </span><span style="color: #268BD2">Uppy</span><span style="color: #839496">({</span></span>
+<span class="line"><span style="color: #839496">        meta: {</span></span>
+<span class="line"><span style="color: #839496">          NakamalID: </span><span style="color: #268BD2">this</span><span style="color: #839496">.</span><span style="color: #268BD2">nakamal</span><span style="color: #839496">.</span><span style="color: #268BD2">id</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">        },</span></span>
+<span class="line"><span style="color: #839496">      })</span></span>
+<span class="line"><span style="color: #839496">        .</span><span style="color: #268BD2">use</span><span style="color: #839496">(</span><span style="color: #268BD2">Tus</span><span style="color: #839496">, {</span></span>
+<span class="line"><span style="color: #839496">          endpoint: </span><span style="color: #2AA198">`${</span><span style="color: #268BD2">uploadDomain</span><span style="color: #2AA198">}/files/`</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">          chunkSize: </span><span style="color: #D33682">2_000_000</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">          headers: {</span></span>
+<span class="line"><span style="color: #839496">            authorization: </span><span style="color: #2AA198">`Bearer ${</span><span style="color: #268BD2">this</span><span style="color: #839496">.</span><span style="color: #268BD2">token</span><span style="color: #2AA198">}`</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">          },</span></span>
+<span class="line"><span style="color: #839496">        })</span></span>
+<span class="line"><span style="color: #839496">        .</span><span style="color: #268BD2">on</span><span style="color: #839496">(</span><span style="color: #2AA198">&#39;complete&#39;</span><span style="color: #839496">, () </span><span style="color: #93A1A1; font-weight: bold">=&gt;</span><span style="color: #839496"> {</span></span>
+<span class="line"><span style="color: #839496">          </span><span style="color: #268BD2">this</span><span style="color: #839496">.</span><span style="color: #268BD2">$emit</span><span style="color: #839496">(</span><span style="color: #2AA198">&#39;close-modal&#39;</span><span style="color: #839496">);</span></span>
+<span class="line"><span style="color: #839496">        })</span></span>
+<span class="line"><span style="color: #839496">        .</span><span style="color: #268BD2">on</span><span style="color: #839496">(</span><span style="color: #2AA198">&#39;upload-error&#39;</span><span style="color: #839496">, (_, error) </span><span style="color: #93A1A1; font-weight: bold">=&gt;</span><span style="color: #839496"> {</span></span>
+<span class="line"><span style="color: #839496">          </span><span style="color: #268BD2">this</span><span style="color: #839496">.</span><span style="color: #268BD2">$emit</span><span style="color: #839496">(</span><span style="color: #2AA198">&#39;close-modal&#39;</span><span style="color: #839496">);</span></span>
+<span class="line"><span style="color: #839496">          </span><span style="color: #268BD2">this</span><span style="color: #839496">.</span><span style="color: #268BD2">$store</span><span style="color: #839496">.</span><span style="color: #268BD2">dispatch</span><span style="color: #839496">(</span><span style="color: #2AA198">&#39;notify/add&#39;</span><span style="color: #839496">, {</span></span>
+<span class="line"><span style="color: #839496">            title: </span><span style="color: #2AA198">&#39;Upload Error&#39;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">            text: </span><span style="color: #2AA198">&#39;Upload failed due to some unknown issues. Try again later.&#39;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">            type: </span><span style="color: #2AA198">&#39;warning&#39;</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">          });</span></span>
+<span class="line"><span style="color: #839496">        });</span></span>
+<span class="line"><span style="color: #839496">    },</span></span>
+<span class="line"><span style="color: #839496">  },</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">beforeDestroy</span><span style="color: #839496">() {</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #268BD2">this</span><span style="color: #839496">.</span><span style="color: #268BD2">uppy</span><span style="color: #839496">.</span><span style="color: #268BD2">close</span><span style="color: #839496">();</span></span>
+<span class="line"><span style="color: #839496">  },</span></span>
+<span class="line"><span style="color: #839496">};</span></span>
+<span class="line"><span style="color: #586E75">&lt;/</span><span style="color: #268BD2">script</span><span style="color: #586E75">&gt;</span></span></code></pre><h2 id="backend">Backend</h2><p>The tusd instance will handle the incoming uploads and communicate with our API via the <code>-hooks-http</code> value, including forwarding the <code>Authorization</code> header.</p><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #268BD2">tusd</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">image</span><span style="color: #839496">: </span><span style="color: #2AA198">tusproject/tusd</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">ports</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">    - </span><span style="color: #2AA198">&quot;8070:8070&quot;</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">volumes</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">    - </span><span style="color: #2AA198">&quot;${IMAGES_LOCAL_DIR}/uploads/:/data/&quot;</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">env_file</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">    - </span><span style="color: #2AA198">.env</span></span>
+<span class="line"><span style="color: #839496">  </span><span style="color: #268BD2">command</span><span style="color: #839496">: </span><span style="color: #2AA198">-port 8070 -upload-dir /data/ -behind-proxy -hooks-http https://example.com/tus-hook -hooks-http-forward-headers authorization -hooks-enabled-events pre-create,post-finish</span></span></code></pre><p>Lastly, our backend built with FastAPI handles incoming webook requests from the tusd instance to authenticate uploads and when the upload completes it handles the file and adds it to the database.</p><blockquote>
+<p>Do take note this example assumes the tusd instance is saving the files to the same locally accessible filesystem as the backend API.</p>
+</blockquote><pre class="astro-code" style="background-color: #002B36; overflow-x: auto;"><code><span class="line"><span style="color: #268BD2">@router.post</span><span style="color: #839496">(</span><span style="color: #2AA198">&quot;/tus-hook&quot;</span><span style="color: #839496">, include_in_schema</span><span style="color: #859900">=</span><span style="color: #B58900">False</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #93A1A1; font-weight: bold">async</span><span style="color: #839496"> </span><span style="color: #93A1A1; font-weight: bold">def</span><span style="color: #839496"> </span><span style="color: #268BD2">tus_hook</span><span style="color: #839496">(</span></span>
+<span class="line"><span style="color: #839496">    db: AsyncSession </span><span style="color: #859900">=</span><span style="color: #839496"> Depends(get_db),</span></span>
+<span class="line"><span style="color: #839496">    user_manager: UserManager </span><span style="color: #859900">=</span><span style="color: #839496"> Depends(get_user_manager),</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">*</span><span style="color: #839496">,</span></span>
+<span class="line"><span style="color: #839496">    hook_name: </span><span style="color: #859900">str</span><span style="color: #839496"> </span><span style="color: #859900">=</span><span style="color: #839496"> Header(</span><span style="color: #CB4B16">...</span><span style="color: #839496">),</span></span>
+<span class="line"><span style="color: #839496">    tusdIn: Any </span><span style="color: #859900">=</span><span style="color: #839496"> Body(</span><span style="color: #CB4B16">...</span><span style="color: #839496">),</span></span>
+<span class="line"><span style="color: #839496">) -&gt; Any:</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #2AA198">&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color: #2AA198">    Hook for tusd.</span></span>
+<span class="line"><span style="color: #2AA198">    &quot;&quot;&quot;</span></span>
+<span class="line"><span style="color: #839496">    scheme, _, token </span><span style="color: #859900">=</span><span style="color: #839496"> tusdIn.get(</span><span style="color: #2AA198">&quot;HTTPRequest&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;Header&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;Authorization&quot;</span><span style="color: #839496">)[</span><span style="color: #D33682">0</span><span style="color: #839496">].partition(</span><span style="color: #2AA198">&quot; &quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">try</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">        user_id </span><span style="color: #859900">=</span><span style="color: #839496"> get_user_id_from_jwt(token)  </span><span style="color: #586E75; font-style: italic"># psuedo code</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">if</span><span style="color: #839496"> user_id </span><span style="color: #859900">is</span><span style="color: #839496"> </span><span style="color: #B58900">None</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">raise</span><span style="color: #839496"> HTTPException(status_code</span><span style="color: #859900">=</span><span style="color: #839496">status.</span><span style="color: #CB4B16">HTTP_400_BAD_REQUEST</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #586E75; font-style: italic"># Check user is verified and active or superuser</span></span>
+<span class="line"><span style="color: #839496">        user </span><span style="color: #859900">=</span><span style="color: #839496"> </span><span style="color: #859900">await</span><span style="color: #839496"> user_manager.get(user_id)</span></span>
+<span class="line"><span style="color: #839496">        status_code </span><span style="color: #859900">=</span><span style="color: #839496"> status.</span><span style="color: #CB4B16">HTTP_401_UNAUTHORIZED</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">if</span><span style="color: #839496"> user:</span></span>
+<span class="line"><span style="color: #839496">            status_code </span><span style="color: #859900">=</span><span style="color: #839496"> status.</span><span style="color: #CB4B16">HTTP_403_FORBIDDEN</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">if</span><span style="color: #839496"> </span><span style="color: #859900">not</span><span style="color: #839496"> user.is_active:</span></span>
+<span class="line"><span style="color: #839496">                status_code </span><span style="color: #859900">=</span><span style="color: #839496"> status.</span><span style="color: #CB4B16">HTTP_401_UNAUTHORIZED</span></span>
+<span class="line"><span style="color: #839496">                user </span><span style="color: #859900">=</span><span style="color: #839496"> </span><span style="color: #B58900">None</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">if</span><span style="color: #839496"> </span><span style="color: #859900">not</span><span style="color: #839496"> user.is_verified </span><span style="color: #859900">or</span><span style="color: #839496"> </span><span style="color: #859900">not</span><span style="color: #839496"> user.is_superuser:</span></span>
+<span class="line"><span style="color: #839496">                user </span><span style="color: #859900">=</span><span style="color: #839496"> </span><span style="color: #B58900">None</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">if</span><span style="color: #839496"> </span><span style="color: #859900">not</span><span style="color: #839496"> user:</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">raise</span><span style="color: #839496"> HTTPException(status_code</span><span style="color: #859900">=</span><span style="color: #839496">status_code)</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">except</span><span style="color: #839496"> jwt.PyJWTError:</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">raise</span><span style="color: #839496"> HTTPException(status_code</span><span style="color: #859900">=</span><span style="color: #839496">status.</span><span style="color: #CB4B16">HTTP_401_UNAUTHORIZED</span><span style="color: #839496">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #586E75; font-style: italic"># Check Nakamal exists</span></span>
+<span class="line"><span style="color: #839496">    nakamal_id </span><span style="color: #859900">=</span><span style="color: #839496"> tusdIn.get(</span><span style="color: #2AA198">&quot;Upload&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;MetaData&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;NakamalID&quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">    nakamal </span><span style="color: #859900">=</span><span style="color: #839496"> get_nakamal(nakamal_id)  </span><span style="color: #586E75; font-style: italic"># psuedo code</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">if</span><span style="color: #839496"> </span><span style="color: #859900">not</span><span style="color: #839496"> nakamal:</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">raise</span><span style="color: #839496"> HTTPException(status_code</span><span style="color: #859900">=</span><span style="color: #839496">status.</span><span style="color: #CB4B16">HTTP_404_NOT_FOUND</span><span style="color: #839496">, detail</span><span style="color: #859900">=</span><span style="color: #2AA198">&quot;Nakamal not found.&quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">    </span><span style="color: #859900">if</span><span style="color: #839496"> hook_name </span><span style="color: #859900">==</span><span style="color: #839496"> </span><span style="color: #2AA198">&quot;post-finish&quot;</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">        file_id </span><span style="color: #859900">=</span><span style="color: #839496"> tusdIn.get(</span><span style="color: #2AA198">&quot;Upload&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;ID&quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">        filename </span><span style="color: #859900">=</span><span style="color: #839496"> tusdIn.get(</span><span style="color: #2AA198">&quot;Upload&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;MetaData&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;filename&quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">        filetype </span><span style="color: #859900">=</span><span style="color: #839496"> tusdIn.get(</span><span style="color: #2AA198">&quot;Upload&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;MetaData&quot;</span><span style="color: #839496">).get(</span><span style="color: #2AA198">&quot;filetype&quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">try</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">            tusUpload </span><span style="color: #859900">=</span><span style="color: #839496"> Path(settings.</span><span style="color: #CB4B16">IMAGES_LOCAL_DIR</span><span style="color: #839496">) </span><span style="color: #859900">/</span><span style="color: #839496"> </span><span style="color: #2AA198">&quot;uploads&quot;</span><span style="color: #839496"> </span><span style="color: #859900">/</span><span style="color: #839496"> file_id</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">assert</span><span style="color: #839496"> tusUpload.exists()</span></span>
+<span class="line"><span style="color: #839496">            save_file(tusUpload, nakamal_id</span><span style="color: #859900">=</span><span style="color: #839496">nakamal_id, file_id</span><span style="color: #859900">=</span><span style="color: #839496">file_id, filename</span><span style="color: #859900">=</span><span style="color: #839496">filename)  </span><span style="color: #586E75; font-style: italic"># psuedo code</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #586E75; font-style: italic"># Remove Tus `.info` file</span></span>
+<span class="line"><span style="color: #839496">            tusInfo </span><span style="color: #859900">=</span><span style="color: #839496"> Path(</span><span style="color: #859900">str</span><span style="color: #839496">(tusUpload) </span><span style="color: #859900">+</span><span style="color: #839496"> </span><span style="color: #2AA198">&quot;.info&quot;</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">            tusInfo.unlink()</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">except</span><span style="color: #839496"> </span><span style="color: #CB4B16">Exception</span><span style="color: #839496"> </span><span style="color: #859900">as</span><span style="color: #839496"> exc:</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">raise</span><span style="color: #839496"> HTTPException(status_code</span><span style="color: #859900">=</span><span style="color: #839496">status.</span><span style="color: #CB4B16">HTTP_500_INTERNAL_SERVER_ERROR</span><span style="color: #839496">)</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">try</span><span style="color: #839496">:</span></span>
+<span class="line"><span style="color: #839496">            image </span><span style="color: #859900">=</span><span style="color: #839496"> create_image(</span></span>
+<span class="line"><span style="color: #839496">                file_id</span><span style="color: #859900">=</span><span style="color: #839496">file_id,</span></span>
+<span class="line"><span style="color: #839496">                filename</span><span style="color: #859900">=</span><span style="color: #839496">filename,</span></span>
+<span class="line"><span style="color: #839496">                filetype</span><span style="color: #859900">=</span><span style="color: #839496">filetype,</span></span>
+<span class="line"><span style="color: #839496">                user_id</span><span style="color: #859900">=</span><span style="color: #839496">user_id,</span></span>
+<span class="line"><span style="color: #839496">                nakamal_id</span><span style="color: #859900">=</span><span style="color: #839496">nakamal_id,</span></span>
+<span class="line"><span style="color: #839496">            )  </span><span style="color: #586E75; font-style: italic"># psuedo code</span></span>
+<span class="line"><span style="color: #839496">        </span><span style="color: #859900">except</span><span style="color: #839496"> </span><span style="color: #CB4B16">Exception</span><span style="color: #839496"> </span><span style="color: #859900">as</span><span style="color: #839496"> exc:</span></span>
+<span class="line"><span style="color: #839496">            </span><span style="color: #859900">raise</span><span style="color: #839496"> HTTPException(status_code</span><span style="color: #859900">=</span><span style="color: #839496">status.</span><span style="color: #CB4B16">HTTP_500_INTERNAL_SERVER_ERROR</span><span style="color: #839496">)</span></span></code></pre><h2 id="conclusion">Conclusion</h2><p>This code comes from the Bilolok project which had the goal of being resilient to poor network conditions so all-in-all this was a relatively easy setup for that means.</p>
+</article>
+</div>
+		<footer class="text-center mt-8">
+			<a href="/posts">
+				<span class="inline border-2 border-solid border-black py-2 px-4 font-bold uppercase hover:border-orange-500 hover:text-orange-500 hover:cursor-pointer"><!--[-->View More<!--]--></span>
+			</a>
+		</footer>
+		<div class="mt-12">
+				<div class="mx-auto px-4 max-w-5xl">
+  <h2 class="font-bold text-3xl my-8">Related Project</h2><div class="relative text-white border-1 border-solid border-black bg-black flex flex-col"><div class="relative pt-[37%] bg-cover bg-center" style="background-image:url(&#39;/assets/project/bilolok.png&#39;)"><h1 class="absolute top-0 h-full w-full flex items-center justify-center text-white text-3xl font-bold uppercase tracking-wider text-shadow">Bilolok</h1></div><div class="p-6"><p class="mt-0 mb-4 text-lg leading-normal font-medium">A Foursqaure inspired app for kava bars in Port Vila, Vanuatu.
+</p><div class="text-xs font-medium uppercase"> Tagged: <!--[--><div class="inline ml-2 uppercase text-orange-300" data-key="Vue">Vue</div><div class="inline ml-2 uppercase text-orange-300" data-key="Python">Python</div><div class="inline ml-2 uppercase text-orange-300" data-key="FastAPI">FastAPI</div><div class="inline ml-2 uppercase text-orange-300" data-key="Leaflet">Leaflet</div><!--]--></div><a href="/project/bilolok" class="group absolute top-0 left-0 w-full h-full flex items-center justify-center color-green-600 text-2xl font-bold bg-[rgba(0,0,0,0.35)] opacity-0 uppercase transition-opacity duration-150 hover:opacity-100"><span class="py-1 px-6 text-orange-50 border-2 border-solid border-orange-50 transition-all duration-300 translate-y-1/4 group-hover:translate-y-0 group-focus:translate-y-0 group-hover:border-orange-50 group-focus:border-orange-50"> View </span></a></div></div>
+</div>
+			</div>
+		<footer class="text-center pt-12 px-4 pb-6"> © 2022 Michael Toohig <small class="block mt-4 color-slate-400 text-sm text-uppercase">Built in Vanuatu</small></footer>
+	</body></html>

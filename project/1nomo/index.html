@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+<meta name="description" property="og:description" content="An automated linear TV channel broadcast FTA in Port Vila, Vanuatu.
+">
+<meta name="viewport" content="width=device-width">
+<title>1NOMO</title>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+
+<script>
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+	<link rel="stylesheet" href="/assets/d3a187b4.cce37e92.css" />
+<link rel="stylesheet" href="/assets/3592ccdf.d5d1bbea.css" />
+<link rel="stylesheet" href="/assets/3360f7d5.b820cadb.css" /></head>
+	<body class="bg-blue-50">
+		<nav class="flex items-center py-4 px-8" data-v-20129e31><a class="block" href="/" data-v-20129e31><div class="flex items-center justify-center pb-0.5 w-10 h-6 mr-2 transition-all ease-in-out duration-150 text-slate-900 font-black leading-tight border-2 border-slate-900 hover:border-orange-500 border-solid rounded-xl hover:text-orange-500 focus:text-orange-500" data-v-20129e31>MT</div></a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/posts" data-v-20129e31> Posts </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/projects" data-v-20129e31> Portfolio </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/about" data-v-20129e31> About </a><a class="block ml-auto" href="https://github.com/michaeltoohig" data-v-20129e31><svg class="block w-6 h-6 fill-slate-900 transition-colors duration-150 hover:fill-orange-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-v-20129e31><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-v-20129e31></path></svg></a></nav>
+		<header style="background-image:url(/assets/project/1nomo.png)" class="
+			p-6
+			text-white
+			bg-black
+			flex
+			items-center
+			justify-center
+			w-100
+			h-100
+			min-h-[70vh]
+			bg-cover
+			bg-no-repeat
+			bg-center
+		">
+			<h1 class="
+				text-6xl
+				md:text-7xl
+				font-black
+				uppercase
+				tracking-wider
+				text-shadow
+			">1NOMO</h1>
+		</header>
+		<div class="text-white bg-black">
+			<div class="py-12 mb-12 text-center">
+				<span class="m-4 uppercase text-orange-300">Python</span><span class="m-4 uppercase text-orange-300">OBS</span>
+				<h3 class="mt-2 text-2xl font-normal">An automated linear TV channel broadcast FTA in Port Vila, Vanuatu.
+</h3>
+			</div>
+		</div>
+		<div class="mx-auto px-4 max-w-5xl">
+  <article class="
+  mx-auto
+  prose
+  md:prose-lg
+  lg:prose-xl
+  prose-img:rounded
+  prose-img:drop-shadow-lg
+">
+  <p>1NOMO is a locally run and broadcasted channel in Port Vila with the intention to compete with the only other locally broadcast television channel at the time run the by government.
+Since we would have an automated system that could handle playlist generation and video transitions without human intervention, we hoped to capitalize on cheap advertising rates and more advanced social integrations via Facebook inspired by other online streaming services.</p><blockquote>
+<p>We launched quietly in the end of 2019 in hopes to test out the system and begin making some approaches to local businesses for advertising prices an order of a magnitude cheaper but we all know what slowed the economy and shut our borders down a few months later.</p>
+</blockquote><p>I truly believe the project could have grown into a major business on its own with the deals we setup for local producers for news programs, cooking shows, etc and our automated system meant we could afford cheap advertising too. But, things didn’t work out that way so let’s focus on the technical elements of the project from here on out.</p><p>The project is comprised of a few primary elements.</p><ul>
+<li>Media Management</li>
+<li>Advertiser Campaign Management</li>
+<li>Playlist templates and schedule solver</li>
+<li>Live video overlays</li>
+</ul><img src="/assets/filled-template.03bfd718.png"><h2 id="architecture">Architecture</h2><h3 id="media-storage">Media Storage</h3><p>Our office already had 2 redundant FreeNAS servers which had some empty expansion slots remaining. Into those expansion slots I added 2x4x6TB drives giving us 16TB of usable storage on the ZFS filesystem. With a bit of configuration we then had a backup on the second FreeNAS system.</p><h3 id="playout-server">Playout Server</h3><p>Playout refers the machine that actually plays the media content for broadcast. A mid-range desktop works well for this to prevent any hiccups in media playback. On the playout server we run <a href="https://obsproject.com">OBS</a> which actually plays the media content and other segments.</p><p>I found <abbr title="Open Broadcaster Software">OBS</abbr> to fit our needs just fine, although at first we looked at multiple other options such as <a href="https://casparcg.com">CasperCG</a>, <a href="https://nebulabroadcast.com">Nebula Broadcast</a>, and VLC among others.</p><p>OBS had a great websockets server so we could remotely control it, support for drag-and-drop layouts which even non-technical users could setup, and supported streaming right out of the box.</p><h3 id="management-server">Management Server</h3><p>The management server runs everything else from web interface to background tasks to Telegram bot for remote monitoring and management.</p><h3 id="stream-server">Stream Server</h3><p>The stream server was comprised of an Nginx instance with the RTMP module installed and a small Flask app that provided authentication for the incoming streams. From this server we could provide an HLS stream to our public website and re-stream to Facebook via <a href="https://www.stunnel.org">stunnel</a>.</p><h2 id="web-interface">Web Interface</h2><p>The web interface is built with Flask and allows us to build the week’s playlists, import new content and setup advertisements all in a morning.</p><h4 id="media-managment">Media Managment</h4><img src="/assets/media-management.aa4bb483.png"><h4 id="advertisement-campaign">Advertisement Campaign</h4><img src="/assets/advertisement-campaign.04401f40.png"><h2 id="playlist-solver">Playlist Solver</h2><p>Playlists are built following templates which are composed of clocks.</p><h3 id="clocks">Clocks</h3><p>Clocks are the building blocks of a template. Clocks are composed of a duration, an optional set of tags and a type of of content such as a series, a movie, or an OBS scene.</p><p>During playlist generation, clocks are used to choose the actual media files to schedule into the playlist. A series would select an episode, a movie would select based on the tags of the clock and a scene would tell OBS to change its current active scene to the name given. Those scenes would often contain an external stream such as ABC news.</p><img scr="/assets/clock.21a0e924.png"><h3 id="templates">Templates</h3><p>Templates allow us to build repeatable playlists for different days. Clocks are placed on a 24 hour timeline to build the template. Clocks can be either <code>premiere</code>, <code>repeat</code> or <code>random</code> types. Premiere is often used for series which means the playlist generation should select the next episode in the series incrementing one episode since the last premiere. Repeat allows us to play the last premiere episode again at a later time. Lastly, random selects either a random episode of a series or selects randomly from the pool available content that fits the given tags on the clock.</p><img scr="/assets/template.127ac410.png"><h3 id="playlists">Playlists</h3><p>Playlists are built from templates that are assigned to that particular date. 1Nomo is <em>linear</em> because playlists should be built one after the other so our playlist generation can accurate find the next episode to play for a premiere or schedule the correct advertisements for the date and time of day.</p><p>However, playlists can be overriden and selected media within a playlist can be changed and the clock can be resolved to fill in the remaining duration.</p><img scr="/assets/filled-template.03bfd718.png"><p>Each clock in a playlist usually follows a pattern</p><ol>
+<li>a <dfn title="A short clip that shows the channel logo">bumper</dfn></li>
+<li>the main clock content</li>
+<li>a “be right back” bumper</li>
+<li>any advertisements for the clock’s date/time</li>
+<li>a <dfn title="Promotional clip for content on the channel">promo</dfn></li>
+<li>any filler media to pad any excessive time remaining in the clock</li>
+<li>a <abbr title="Public Serivce Annoucements">PSA</abbr></li>
+<li>one or more dynamic segments that can exactly fit the remaining duration</li>
+</ol><h2 id="dynamic-segments">Dynamic Segments</h2><p>Dynamic segments are elements of a playlist that tell OBS to change to a given scene. These scenes have some sort of background video, music track and a browser overlay with transparent background that shows the background video. Some dynamic segments we have are an “Up next” which shows the names of upcoming series or movies, weather segment and a COVID-19 update segment.</p><p>These were built as a collection of small Vue.js apps which pulled data from the our API to create the segments. A benefit of this approach was they had no particular duration and were always updated on the fly.</p><p>These segments relied on our API and we would run periodic tasks to process weather data or COVID data from the WHO and local authorities so our segments had data they could fetch quickly.</p><h3 id="up-next-overlay">Up Next Overlay</h3><video src="/assets/segment-upnext.0300c86c.webm" autoplay muted loop height="360"></video><h3 id="weather-overlay">Weather Overlay</h3><video src="/assets/segment-weather-full.f251b447.webm" controls loop height="360"></video><video src="/assets/segment-weather.79fe09f0.webm" autoplay muted loop height="360"></video><h3 id="covid-19-overlay">COVID 19 Overlay</h3><video src="/assets/segment-covid-full.6976ebee.webm" controls loop height="360"></video><h3 id="primary-overlay">Primary Overlay</h3><p>The primary overlay contained our logo and periodic news ticker.</p><video src="/assets/segment-primary.add6955c.webm" autoplay muted loop height="360"></video><video src="/assets/segment-primary-news.eb4f108e.webm" autoplay muted loop height="360"></video><p>The logo would also periodically give the current weather or promote our Facebook page.</p><video src="/assets/segment-primary-facebook.686a975a.webm" autoplay muted loop height="360"></video><video src="/assets/segment-primary-weather.2d6bf024.webm" autoplay muted loop height="360"></video>
+</article>
+</div>
+		<footer class="text-center mt-8">
+			<a href="/projects">
+				<span class="inline border-2 border-solid border-black py-2 px-4 font-bold uppercase hover:border-orange-500 hover:text-orange-500 hover:cursor-pointer"><!--[-->Return<!--]--></span>
+			</a>
+		</footer>
+		
+		<footer class="text-center pt-12 px-4 pb-6"> © 2022 Michael Toohig <small class="block mt-4 color-slate-400 text-sm text-uppercase">Built in Vanuatu</small></footer>
+	</body></html>

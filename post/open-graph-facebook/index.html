@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+<meta name="description" property="og:description" content="Painful workarounds to accommodate Facebook's web crawler
+">
+<meta name="viewport" content="width=device-width">
+<title>OG Tags and Facebook Issues</title>
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+
+<script>
+// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+} else {
+  document.documentElement.classList.remove('dark');
+}
+</script>
+	<link rel="stylesheet" href="/assets/d3a187b4.cce37e92.css" />
+<link rel="stylesheet" href="/assets/3592ccdf.d5d1bbea.css" />
+<link rel="stylesheet" href="/assets/3360f7d5.b820cadb.css" /></head>
+	<body class="bg-blue-50">
+		<nav class="flex items-center py-4 px-8" data-v-20129e31><a class="block" href="/" data-v-20129e31><div class="flex items-center justify-center pb-0.5 w-10 h-6 mr-2 transition-all ease-in-out duration-150 text-slate-900 font-black leading-tight border-2 border-slate-900 hover:border-orange-500 border-solid rounded-xl hover:text-orange-500 focus:text-orange-500" data-v-20129e31>MT</div></a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/posts" data-v-20129e31> Posts </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/projects" data-v-20129e31> Portfolio </a><a class="block ml-4 text-md uppercase py-3 text-slate-600 transition-all ease-in-out duration-150 hover:font-bold hover:text-orange-500 focus:text-orange-500" href="/about" data-v-20129e31> About </a><a class="block ml-auto" href="https://github.com/michaeltoohig" data-v-20129e31><svg class="block w-6 h-6 fill-slate-900 transition-colors duration-150 hover:fill-orange-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" data-v-20129e31><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" data-v-20129e31></path></svg></a></nav>
+		<header style="background-image:url(/assets/post/og-tags-facebook.jpg)" class="
+			p-6
+			text-white
+			bg-black
+			flex
+			items-center
+			justify-center
+			w-100
+			h-100
+			min-h-[70vh]
+			bg-cover
+			bg-no-repeat
+			bg-center
+		">
+			<h1 class="
+				text-6xl
+				font-black
+				uppercase
+				tracking-wider
+				text-shadow
+			">OG Tags and Facebook Issues</h1>
+		</header>
+		<div class="text-white bg-black">
+			<div class="py-12 mb-12 text-center">
+				<span class="m-4 uppercase text-orange-300">Python</span><span class="m-4 uppercase text-orange-300">Starlette</span>
+				<h3 class="mt-2 text-2xl font-normal">Painful workarounds to accommodate Facebook&#39;s web crawler
+</h3>
+			</div>
+		</div>
+		<div class="mx-auto px-4 max-w-5xl">
+  <article class="
+  mx-auto
+  prose
+  md:prose-lg
+  lg:prose-xl
+  prose-img:rounded
+  prose-img:drop-shadow-lg
+">
+  <p>Working on my personal project <a href="https://bilolok.com">Bilolok</a>, I began implementing the <a href="https://ogp.me">Open Graph Protocol</a> so that content shared on Facebook or other social media sites would appear professional and garner interest for the app.
+This was especially important for Facebook since nearly 1/3 of the country’s population are active members and I expect most incoming visitors would be from there.</p><p>Originally, I just had static Open Graph tags in the project’s <code>&lt;head&gt;</code> but later, when I added more user content I wanted dynamic <abbr title="Open Graph">OG</abbr> tags to match the content of the page.</p><h2 id="first-issue">First Issue</h2><p>Bilolok is a <abbr title="Single Page Application">SPA</abbr> and therefore the index page’s <code>&lt;head&gt;</code> would not be able to update until the JavaScript was loaded and run.
+Well, that is true in the basic deployment pattern others exist and keep reading for more.
+Web crawlers or bots do not usually run JavaScript so whatever OG tags I set on the website’s <code>index.html</code> would be the OG tags for all content shared on external platforms.
+I was using a package called <a href="https://github.com/nuxt/vue-meta">vue-meta</a> to update the OG tags and page title when the user navigates through the website but again this requires the JavaScript is running which web crawlers and bots do not do.
+So I needed a way to render the OG tags I wanted server side so the external social media sites had the information I wanted.</p><p>One solution would be to invest in server side rendered SPA such as <a href="https://nuxtjs.org">NuxtJS</a> which is Vue’s response to <a href="https://nextjs.org">NextJS</a> but that sort of investment to my app seemed like a major rewrite since Nuxt is very opinionated and I would have to make sure my app fits into whatever their conventions are.</p><p>Another solution would be an external service such as <a href="https://prerender.io">Prerender.io</a>.
+I did not look too far into this one since I didn’t want to take on an external service for my small project.
+Plus, I know my requirements are quite simple and I could handle it myself.</p><p>So finally, I decided to build my own prerender of sorts.
+This solution uses a simple nginx if statement to catch known/popular crawler and/or bot user agent strings then redirect them to the dynamically crafted <code>index.html</code> file for the resource they requested.
+I do not prebuild index files for every resource but instead added a subdirectory in the backend FastAPI server where I use <a href="https://www.starlette.io">starlette</a> to handle the requests.
+Starlette is the foundation which FastAPI is built so this doesn’t require any new packages to be installed to the project except for jinja2 for templating.
+Since the small app for OG tags is nested in the main backend app I have access to all the same models and CRUD classes so I can keep consistency between the main API and this app easily.
+The returned files are very simple only really containing the customized OG tags in the head and not much more.</p><h3 id="possible-improvement">Possible Improvement</h3><p>So now we have two backend apps, the primary API and an app for server side rendered files containing customized OG tags.
+Don’t forget we also have to add if statements to our app’s nginx config to redirect known crawlers to this OG app.
+Also, don’t forget we have the default, static OG tags on the index page loaded by those who do not get caught in the crawler check.
+So at this point there is a bit of coupling between the dynamic OG tags and default static OG tags which makes me feel I have two sources of truth, 3 if you count the tags being modified by vue-meta in the app too.</p><p>This sort of coupling has me thinking about how I could use the OG tags app to return an HTML file that includes scripts to the built frontend app. Now this is another sort of coupling that complicates deployment but removes the 2 or 3 sources of truth for OG tags.
+The trade-off down the road may be worth it but for now this quick afternoon fix to my initial problem using starlette suffices.</p><h2 id="second-issue">Second Issue</h2><p>Facebook could not find the page each time I tested on their Sharing Debugger.
+They would show that they received a 307 response to upgrade their request from http to https.
+Apparently, they do not have time to follow redirects so I had add my crawler check into the nginx servers on port 80 and allow them to the OG tags app without the usual redirect to https.</p><p>The OG tags app is working as intended and very small and easily to modify if ever needed.
+But, it still doesn’t work on Facebook.
+Facebook would also report issues for images saying the content type was invalid.</p><p>Bilolok has a sub-domain for images since I found that easy to set up and I like keeping services distinct that way.
+I am using <a href="https://github.com/thumbor/thumbor">Thumbor</a> to process return images so my first thought was something was wrong with how Thumbor was responding.
+Yes, Thumbor is configured to return <code>image/webp</code> formats if supported which Facebook sharing does not support so I thought that was issue but even forcing all users to use jpeg format by adding a header in the nginx config that forced <code>Accept: image/jpeg</code> did not resolve the issue.</p><p>My next thought was to be sure Thumbor was not managling the images in some way that I hadn’t noticed before but the Facebook crawler may have been sensitive too.
+But, I noticed the same issue was true to a jpeg file on the root of the app which was returned by the root domain and not the sub domain for images so Thumbor was not the issue.</p><p>Lastly, I dug further into Google to find this issue online.
+Suprisingly, I found a new result that said <code>HTTPS</code> was the issue.
+The first occurance of the issue I could find was a StackOverflow post from 2013 but apparently later posts also complained this issue was ongoing as late as 2018 and I can confirm even in 2022.
+As before the https issue was the root problem.
+I then had to modify my nginx app config further in the images subdomain config to check if a crawler was requesting the resource then allow them access the resource and not redirect to https.</p><h2 id="benefits">Benefits</h2><p>Overall this feature adds a bit of complexity to the Nginx config files and requires another systemd service to keep the starlette app running.
+But for an app that leans on social elements so much the reward of dynamic share titles and images is worth it.
+In fact, once I searched Facebook for a kava bar that I heard was having an event and my app was the top result since the kava bar did not have an active page of their own.</p><h2 id="conclusion">Conclusion</h2><p>Catering to Facebook adds complexity to my nginx configs and some mental overhead for future development if I add new resources for sharing but I guess it is a necessary evil since my user base are active Facebook users so Facebook sharing has to work.</p>
+</article>
+</div>
+		<footer class="text-center mt-8">
+			<a href="/posts">
+				<span class="inline border-2 border-solid border-black py-2 px-4 font-bold uppercase hover:border-orange-500 hover:text-orange-500 hover:cursor-pointer"><!--[-->View More<!--]--></span>
+			</a>
+		</footer>
+		<div class="mt-12">
+				<div class="mx-auto px-4 max-w-5xl">
+  <h2 class="font-bold text-3xl my-8">Related Project</h2><div class="relative text-white border-1 border-solid border-black bg-black flex flex-col"><div class="relative pt-[37%] bg-cover bg-center" style="background-image:url(&#39;/assets/project/bilolok.png&#39;)"><h1 class="absolute top-0 h-full w-full flex items-center justify-center text-white text-3xl font-bold uppercase tracking-wider text-shadow">Bilolok</h1></div><div class="p-6"><p class="mt-0 mb-4 text-lg leading-normal font-medium">A Foursqaure inspired app for kava bars in Port Vila, Vanuatu.
+</p><div class="text-xs font-medium uppercase"> Tagged: <!--[--><div class="inline ml-2 uppercase text-orange-300" data-key="Vue">Vue</div><div class="inline ml-2 uppercase text-orange-300" data-key="Python">Python</div><div class="inline ml-2 uppercase text-orange-300" data-key="FastAPI">FastAPI</div><div class="inline ml-2 uppercase text-orange-300" data-key="Leaflet">Leaflet</div><!--]--></div><a href="/project/bilolok" class="group absolute top-0 left-0 w-full h-full flex items-center justify-center color-green-600 text-2xl font-bold bg-[rgba(0,0,0,0.35)] opacity-0 uppercase transition-opacity duration-150 hover:opacity-100"><span class="py-1 px-6 text-orange-50 border-2 border-solid border-orange-50 transition-all duration-300 translate-y-1/4 group-hover:translate-y-0 group-focus:translate-y-0 group-hover:border-orange-50 group-focus:border-orange-50"> View </span></a></div></div>
+</div>
+			</div>
+		<footer class="text-center pt-12 px-4 pb-6"> © 2022 Michael Toohig <small class="block mt-4 color-slate-400 text-sm text-uppercase">Built in Vanuatu</small></footer>
+	</body></html>
