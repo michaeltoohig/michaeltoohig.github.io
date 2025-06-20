@@ -1,0 +1,1 @@
+.counter{grid-template-columns:repeat(3,minmax(0,1fr));place-items:center;margin-top:2em;font-size:2em;display:grid}.counter-message{text-align:center}
